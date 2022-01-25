@@ -6,6 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.PositionAssertions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -24,6 +25,18 @@ class MainActivityEspressoTest {
     @Before
     fun setup() {
         scenario = ActivityScenario.launch(MainActivity::class.java)
+    }
+
+    @Test
+    fun activitySearch_CheckViews() {
+        onView(withId(R.id.searchEditText))
+            .check(matches(isDisplayed()))
+            .check(isCompletelyAbove(withId(R.id.toDetailsActivityButton)))
+            .check(matches(withHint("Enter keyword e.g. android")))
+        onView(withId(R.id.toDetailsActivityButton))
+            .check(matches(isDisplayed()))
+            .check(isCompletelyBelow(withId(R.id.searchEditText)))
+            .check(matches(withText("to details")))
     }
 
     @Test
